@@ -1,0 +1,32 @@
+If the authentication process is successful, we can get User’s information such as username, password, authorities from an Authentication object.
+
+
+Authentication authentication = 
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(username, password)
+        );
+
+UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+// userDetails.getUsername()
+// userDetails.getPassword()
+// userDetails.getAuthorities()
+
+
+After this, everytime you want to get UserDetails, just use SecurityContext like this:
+
+UserDetails userDetails =
+	(UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+// userDetails.getUsername()
+// userDetails.getPassword()
+// userDetails.getAuthorities()
+
+
+
+Now we can secure methods in our Apis with @PreAuthorize annotation easily.
+
+@GetMapping("/user")
+@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+public String userAccess() {
+	return "User Content.";
+}

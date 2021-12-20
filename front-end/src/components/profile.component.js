@@ -11,6 +11,7 @@ export default class Profile extends Component {
     }
 
     render() {
+        
         const { currentUser } = this.state;
 
         return (
@@ -31,6 +32,7 @@ export default class Profile extends Component {
                 </p>
                 <p>
                     <strong>Email:</strong>{" "}
+                    {currentUser.email}
                 </p>
                 <strong>Authorities:</strong>
                 <ul>

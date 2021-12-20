@@ -29,8 +29,13 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     @Getter @Setter private Set<Order> order = new HashSet<Order>();
-
-    @OneToMany(mappedBy = "product")
+    
+    @OneToMany
+    @JoinColumns({
+        @JoinColumn(
+            name = "product_id",
+            referencedColumnName = "id")
+    })
     @Getter @Setter private Set<Availability> availability = new HashSet<Availability>();
 
     public Product() {}
@@ -42,6 +47,7 @@ public class Product {
         this.price = price;
     }
 
+    /*
     public void addShop(Order shop) {
         this.order.add(shop);
     }
@@ -57,4 +63,6 @@ public class Product {
     public void addAvailability(Availability availability) {
         this.availability.add(availability);
     }
+    */
+
 }

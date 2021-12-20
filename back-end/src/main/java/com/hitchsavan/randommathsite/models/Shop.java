@@ -24,6 +24,14 @@ public class Shop {
     @OneToMany(mappedBy = "shop")
     @Getter @Setter private Set<Order> order = new HashSet<Order>();
 
+    @OneToMany
+    @JoinColumns(
+        @JoinColumn(
+            name = "shop_id",
+            referencedColumnName = "id")
+    )
+    @Getter @Setter private Set<Availability> availability = new HashSet<Availability>();
+
     public Shop() {}
 
     public Shop(long id, String name) {

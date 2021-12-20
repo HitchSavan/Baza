@@ -10,6 +10,9 @@ import lombok.Setter;
 @Table( name = "availability")
 public class Availability {
     
+    @EmbeddedId
+    @Getter @Setter private AvailabilityId id;
+    /*
     @ManyToOne
     @JoinColumn(name = "product_id")
     @Getter @Setter private Product product;
@@ -17,7 +20,7 @@ public class Availability {
     @ManyToOne
     @JoinColumn(name = "shop_id")
     @Getter @Setter private Shop shop;
-
+    */
     @NotBlank
     @Getter @Setter private long amount;
 

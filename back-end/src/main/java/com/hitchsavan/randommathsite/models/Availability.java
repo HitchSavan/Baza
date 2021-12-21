@@ -1,7 +1,9 @@
 package com.hitchsavan.randommathsite.models;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,24 +11,21 @@ import lombok.Setter;
 @Entity
 @Table( name = "availability")
 public class Availability {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter @Setter private long id;
     
-    @EmbeddedId
-    @Getter @Setter private AvailabilityId id;
-    /*
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    @Getter @Setter private Product product;
+    @OneToMany(mappedBy = "availability")
+    @Setter private Set<AvailabilityProduct> availableProducts = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "shop_id")
     @Getter @Setter private Shop shop;
-    */
-    @NotBlank
-    @Getter @Setter private long amount;
 
     public Availability() {}
-    
-    public Availability(long amount) {
-        this.amount = amount;
+
+    public Availability(Shop shop) {
+        this.shop = shop;
     }
 }

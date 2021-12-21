@@ -4,10 +4,10 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 
-import com.hitchsavan.randommathsite.models.Order;
+import com.hitchsavan.randommathsite.models.Orders;
 import com.hitchsavan.randommathsite.models.Product;
 import com.hitchsavan.randommathsite.models.Shop;
-import com.hitchsavan.randommathsite.repository.OrderRepository;
+import com.hitchsavan.randommathsite.repository.OrdersRepository;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,23 +19,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/order")
-public class OrderController {
+@RequestMapping("/orders")
+public class OrdersController {
     
-    private final OrderRepository orderRepository;
+    private final OrdersRepository ordersRepository;
 
-    public OrderController(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
+    public OrdersController(OrdersRepository ordersRepository) {
+        this.ordersRepository = ordersRepository;
     }
 
     @GetMapping
-    public List<Order> getOrders() {
-        return (List<Order>) orderRepository.findAll();
+    public List<Orders> getOrders() {
+        return (List<Orders>) ordersRepository.findAll();
     }
     
     @PostMapping
-    void addOrder(@RequestBody Order order) {
-        orderRepository.save(order);
+    void addOrders(@RequestBody Orders orders) {
+        ordersRepository.save(orders);
     }
 
     @PutMapping(path = "id")
@@ -45,15 +45,10 @@ public class OrderController {
                      @RequestParam(required = false) long amount,
                      @RequestParam(required = false) String status,
                      @RequestParam(required = false) Date date) {
-        Order order = orderRepository.findById(id)
+        Orders order = ordersRepository.findById(id)
             .orElseThrow(() -> new IllegalStateException(
                 "I'm broken, I dunno"
             ));
-
-        if(product != null &&
-            !Objects.equals(order.getProduct(), product)) {
-                order.setProduct(product);
-            }
 
         if(shop != null &&
             !Objects.equals(order.getShop(), shop)) {

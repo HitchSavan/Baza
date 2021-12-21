@@ -1,8 +1,5 @@
 package com.hitchsavan.randommathsite.models;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -20,26 +17,16 @@ public class Shop {
     @NotBlank
     @Size(max = 50)
     @Getter @Setter private String name;
-
+    /*
     @OneToMany(mappedBy = "shop")
     @Getter @Setter private Set<Order> order = new HashSet<Order>();
 
-    @OneToMany
-    @JoinColumns(
-        @JoinColumn(
-            name = "shop_id",
-            referencedColumnName = "id")
-    )
+    @OneToMany(mappedBy = "shop")
     @Getter @Setter private Set<Availability> availability = new HashSet<Availability>();
-
+    */
     public Shop() {}
 
-    public Shop(long id, String name) {
-        this.id = id;
+    public Shop(String name) {
         this.name = name;
-    }
-
-    public void addOrder(Order order) {
-        this.order.add(order);
     }
 }

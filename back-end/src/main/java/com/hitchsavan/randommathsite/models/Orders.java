@@ -18,17 +18,12 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter private long id;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable( name = "ordered_products",
-                joinColumns = @JoinColumn(name = "order_id"),
-                inverseJoinColumns = @JoinColumn(name = "product_id"))
-    @Getter @Setter private Set<Product> product = new HashSet<>();
-
     @ManyToOne
     @JoinColumn(name = "shop_id")
     @Getter @Setter private Shop shop;
-
-    @Getter @Setter private long amount;
+    
+    @OneToMany(mappedBy = "order")
+    @Getter @Setter Set<OrderedProducts> orders = new HashSet<>();
 
     @NotBlank
     @Getter @Setter private String status;
@@ -37,9 +32,7 @@ public class Orders {
 
     public Orders() {}
 
-    public Orders(Shop shop, long amount, String status, Date date) {
-        this.shop = shop;
-        this.amount = amount;
+    public Orders(String status, Date date) {
         this.status = status;
         this.date = date;
     }

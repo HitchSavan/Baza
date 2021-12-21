@@ -54,11 +54,6 @@ public class OrdersController {
             !Objects.equals(order.getShop(), shop)) {
                 order.setShop(shop);
             }
-        
-        if(amount >= 0 &&
-            !Objects.equals(order.getAmount(), amount)) {
-                order.setAmount(amount);
-            }
 
         if(status != null &&
             !Objects.equals(order.getStatus(), status)) {

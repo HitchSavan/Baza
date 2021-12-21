@@ -24,9 +24,12 @@ public class Product {
     @Getter @Setter private long amount;
 
     @Getter @Setter private long price;
-    
+
     @OneToMany(mappedBy = "product")
-    @Setter private Set<AvailabilityProduct> availabilityProducts = new HashSet<>();
+    @Setter Set<AvailableProducts> availability = new HashSet<>();
+
+    @OneToMany(mappedBy = "product")
+    @Setter Set<OrderedProducts> orders = new HashSet<>();
 
     public Product() {}
 

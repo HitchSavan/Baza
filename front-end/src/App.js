@@ -8,10 +8,10 @@ import AuthService from './services/auth.service';
 import Login from './components/login.component';
 import Register from './components/register.component';
 import Home from './components/home.component';
+import Shops from './components/shops.component';
+import Products from './components/products.component';
+import Orders from './components/orders.component';
 import Profile from './components/profile.component';
-import BoardUser from './components/board-user.component';
-import BoardModerator from './components/board-moderator.component';
-import BoardAdmin from './components/board-admin.component';
 
 class App extends Component {
     constructor(props) {
@@ -19,8 +19,6 @@ class App extends Component {
         this.logOut = this.logOut.bind(this);
 
         this.state = {
-            showModeratorBoard: false,
-            showAdminBoard: false,
             currentUser: undefined,
         };
     }
@@ -31,8 +29,6 @@ class App extends Component {
         if (user) {
             this.setState({
                 currentUser: user,
-                showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
-                showAdminBoard: user.roles.includes("ROLE_ADMIN"),
             });
         }
     }
@@ -42,61 +38,55 @@ class App extends Component {
     }
 
     render() {
-        const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+        const { currentUser } = this.state;
 
         return (
             <div>
-                <nav className="navbar navbar-expand navbar-dark bg-dark">
+                <nav className="navbar navbar-expand-sm navbar-dark bg-dark logo">
                     <Link to={"/"} className="navbar-brand">
-                        HitchSavan
+                        SkladBaza
                     </Link>
-                    <div className="navbar-nav mr-auto">
+                    <div className="navbar-nav me-auto">
                         <li className="nav-item">
                             <Link to={"/home"} className="nav-link">
                                 Home
                             </Link>
                         </li>
-
-                        {showModeratorBoard && (
-                            <li className="nav-item">
-                                <Link to={"/mod"} className="nav-link">
-                                    Moderator Board
-                                </Link>
-                            </li>
-                        )}
-
-                        {showAdminBoard && (
-                            <li className="nav-item">
-                                <Link to={"/admin"} className="nav-link">
-                                    Admin Board
-                                </Link>
-                            </li>
-                        )}
-
                         {currentUser && (
-                            <li className="nav-item">
-                                <Link to={"/user"} className="nav-link">
-                                    User
-                                </Link>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown" href="#" id="navbarDropdown" aria-expanded="false">
+                                    Data
+                                </a>
+                                <ul class="list-inline dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="nav-link dropdown-item" href="/products">Products</a></li>
+                                    <li><a class="nav-link dropdown-item" href="/shops">Shops</a></li>
+                                    <li><a class="nav-link dropdown-item" href="/orders">Orders</a></li>
+                                </ul>
                             </li>
                         )}
-                    </div>
+                        
+                        {currentUser && (
+                            <div className="navbar-nav">
+                                <li className="nav-item">
+                                    <Link to={"/profile"} className="nav-link">
+                                        {currentUser.username}'s Profile
+                                    </Link>
+                                </li>
+                            </div>
+                        )}
 
+                    </div>
                     {currentUser ? (
-                        <div className="navbar-nav ml-auto">
-                            <li className="nav-item">
-                                <Link to={"/profile"} className="nav-link">
-                                    {currentUser.username}'s Profile
-                                </Link>
-                            </li>
+                        <div className="navbar-nav navbar-right">
                             <li className="nav-item">
                                 <a href="/login" className="nav-link" onClick={this.logOut}>
                                     LogOut
                                 </a>
                             </li>
                         </div>
+                        
                     ) : (
-                        <div className="navbar-nav ml-auto">
+                        <div className="navbar-nav">
                             <li className="nav-item">
                                 <Link to="/login" className="nav-link">
                                     Login
@@ -118,9 +108,9 @@ class App extends Component {
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/profile" component={Profile} />
-                        <Route path="/user" component={BoardUser} />
-                        <Route path="/mod" component={BoardModerator} />
-                        <Route path="/admin" component={BoardAdmin} />
+                        <Route exect path="/products" component={Products}/>
+                        <Route exect path="/orders" component={Orders}/>
+                        <Route exect path="/shops" component={Shops}/>
                     </Switch>
                 </div>
             </div>

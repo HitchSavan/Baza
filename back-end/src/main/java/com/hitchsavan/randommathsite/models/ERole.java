@@ -1,7 +1,0 @@
-package com.hitchsavan.randommathsite.models;
-
-public enum ERole {
-    ROLE_USER,
-    ROLE_MODERATOR,
-    ROLE_ADMIN
-}
